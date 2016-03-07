@@ -11,6 +11,7 @@ public class Book
     private string _id;
     private string _title;
     private string _type;
+    private string _pubId;
     private double _price;
     private string _date;
 
@@ -33,6 +34,12 @@ public class Book
         set { _type = value; }
     }
 
+    public string PubId
+    {
+        get { return _pubId; }
+        set { _pubId = value; }
+    }
+
     public double Price
     {
         get { return _price; }
@@ -45,10 +52,11 @@ public class Book
         set { _date = value; }
     }
 
-    public Book(string a, string b, string c, double d)
+    public Book(string b, string c, double d)
     {
-
-        _id = a;
+        DataLayer x = new DataLayer();
+        string a = (x.readLastBookId()).ToString();
+        _id = "TD"+ a;
         _title = b;
         _type = c;
         _price = d;
