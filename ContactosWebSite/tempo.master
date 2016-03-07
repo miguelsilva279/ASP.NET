@@ -1,0 +1,33 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="tempo.master.cs" Inherits="tempo" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <header style="height:200px" >
+        <h1>Meterologia</h1>
+    </header>
+    <div style="width:30%">
+        <asp:Literal ID="weather_img" runat="server"></asp:Literal>
+        <asp:Literal ID="weather_temp" runat="server"></asp:Literal>
+        <asp:Literal ID="weather_max_temp" runat="server"></asp:Literal>
+        <asp:Literal ID="weather_min_temp" runat="server"></asp:Literal>
+        <asp:Literal ID="weather_tr" runat="server"></asp:Literal>
+    </div>
+    <div style="width:70%" >
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    <footer style="height:100px">
+        <p>CopyRight Miguel Silva 2016</p>
+    </footer>
+    </form>
+</body>
+</html>
