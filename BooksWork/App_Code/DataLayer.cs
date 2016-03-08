@@ -52,10 +52,6 @@ public class DataLayer : IDAL
 
     public void CloseConnection()
     {
-<<<<<<< HEAD
-        throw new NotImplementedException();
-    }  
-=======
         try
         {
             if (conexao.State != ConnectionState.Closed)
@@ -69,7 +65,6 @@ public class DataLayer : IDAL
         }
     }
 
->>>>>>> origin/master
     public bool ConnectionIsOpen()
     {
         try
@@ -448,7 +443,7 @@ public class DataLayer : IDAL
         myCmd.Parameters.AddWithValue("@nome", a);
 
         OleDbDataReader reader;
-        
+
         try
         {
             reader = myCmd.ExecuteReader();
@@ -467,34 +462,36 @@ public class DataLayer : IDAL
 
         return flag;
     }
-    public int readLastBookId()
+    public string readLastBookId()
     {
         OpenConnection();
-        bool flag = false;
-        string strSQL = @"SELECT title_id FROM Books WHERE title_id LIKE'BC%' ORDER BY title_id DESC";
+
+        string strSQL = @"SELECT title_id FROM Books WHERE title_id LIKE 'TD%' ORDER BY title_id DESC";
 
         OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
-        myCmd.Parameters.AddWithValue("@nome", a);
 
         OleDbDataReader reader;
-        int x;
+        string x = string.Empty;
 
         try
         {
             reader = myCmd.ExecuteReader();
             if (!reader.HasRows)
             {
-                x = 1000;  
+                x = "BC1000";
             }
             else
             {
+                while (reader.Read())
+                {
+                    x = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                }
 
             }
         }
         catch (Exception)
         {
             CloseConnection();
-            flag = false;
         }
         finally
         {

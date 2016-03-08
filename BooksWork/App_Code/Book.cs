@@ -54,12 +54,21 @@ public class Book
 
     public Book(string b, string c, double d)
     {
-        DataLayer x = new DataLayer();
-        string a = (x.readLastBookId()).ToString();
-        _id = "TD"+ a;
+        
+        _id = "TD"+ createId().ToString();
         _title = b;
         _type = c;
         _price = d;
         _date = DateTime.Now.ToString("MM/dd/yyyy");
+    }
+
+    public int createId()
+    {
+        DataLayer x = new DataLayer();
+        string a = x.readLastBookId();
+
+        string [] b = a.Split( new string [] {"TD"}, StringSplitOptions.None);
+
+        return int.Parse(b[0]);
     }
 }

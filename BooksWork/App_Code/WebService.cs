@@ -10,7 +10,7 @@ using System.Web.Services;
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-// [System.Web.Script.Services.ScriptService]
+[System.Web.Script.Services.ScriptService]
 public class WebService : System.Web.Services.WebService
 {
 
@@ -22,9 +22,21 @@ public class WebService : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public string HelloWorld()
+    public string getBooks()
     {
-        return "Hello World";
+        
+
+        string resultado = string.Empty;
+
+
+        foreach ( xn in xnList)
+        {
+            if (xn.ChildNodes[0].InnerText == marca)
+            {
+                resultado += "<option>" + xn.ChildNodes[1].InnerText + "</option>";
+            }
+        }
+        return resultado;
     }
 
 }

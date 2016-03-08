@@ -31,7 +31,7 @@ public interface IDAL
     User ExisteUserPass(string a, string b);
     bool jaExisteUser(string a);
     bool ExisteBook(Book e);
-    int readLastBookId();
+    string readLastBookId();
     GridView ReadBook(GridView dataGrid, string idCriador);
     GridView ReadAuthor(GridView dataGrid, string idCon);
     GridView ReadPublisher(GridView dataGrid, string idCon);
