@@ -28,7 +28,7 @@ public class WebService : System.Web.Services.WebService
         string resultado = string.Empty;
 
         List<Book> lista = new List<Book>();
-        lista = x.ReadBook(lista);
+        lista = x.ReadBooks();
 
 
         foreach (Book element in lista)
@@ -38,15 +38,16 @@ public class WebService : System.Web.Services.WebService
             resultado += "<td>" + element.Title + "</td>";
             resultado += "<td>" + element.Type + "</td>";
             List<string> listaAutor = x.ReadAuthor(element.id);
-            int i = 0;
+            int i = 1;
             resultado += "<td>";
             foreach (string item in listaAutor)
             {
 
-                if (item[i] == (listaAutor.Count - 1))
+                if (i==listaAutor.Count)
                     resultado += item ;
                 else
                     resultado += item + ", ";
+                i++;
 
             }
             resultado += "</td>";
@@ -60,4 +61,49 @@ public class WebService : System.Web.Services.WebService
         return resultado;
     }
 
+    [WebMethod]
+    public string getAuthors()
+    {
+        DataLayer x = new DataLayer();
+        string resultado = string.Empty;
+
+        List<Author> lista = x.ReadAuthors();
+        
+
+
+        foreach (Author element in lista)
+        {
+            resultado += "<tr>";
+            resultado += "<td>" + element.Id + "</td>";
+            resultado += "<td>" + element.FirstName+" "+ element.LastName+"</td>";
+            resultado += "<td>" + element.Phone+ "</td>";
+            resultado += "<td>" + element.City + "</td>";
+            resultado += "</tr>";
+
+        }
+        return resultado;
+    }
+
+    [WebMethod]
+    public string getPublishers()
+    {
+        DataLayer x = new DataLayer();
+        string resultado = string.Empty;
+
+        List<Publisher> lista = x.ReadPublishers();
+
+
+
+        foreach (Publisher element in lista)
+        {
+            resultado += "<tr>";
+            resultado += "<td>" + element.Id + "</td>";
+            resultado += "<td>" + element.Name + "</td>";
+            resultado += "<td>" + element.City + "</td>";
+            resultado += "<td>" + element.Country + "</td>";
+            resultado += "</tr>";
+
+        }
+        return resultado;
+    }
 }

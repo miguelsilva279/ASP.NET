@@ -32,9 +32,10 @@ public interface IDAL
     bool jaExisteUser(string a);
     bool ExisteBook(Book e);
     string readLastBookId();
-    List<Book> ReadBook(List<Book> listaBooks);
+    List<Book> ReadBooks();
     List<string> ReadAuthor(string id);
     string ReadPublisher( string id);
+    List<Publisher> ReadPublishers();
     #endregion
     #region UPDATE
     bool UpdateUser(User u);

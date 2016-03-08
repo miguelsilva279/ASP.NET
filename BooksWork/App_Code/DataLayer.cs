@@ -42,7 +42,7 @@ public class DataLayer : IDAL
             }
             else
                 if (conexao.State != ConnectionState.Open)
-                conexao.Open();
+                    conexao.Open();
         }
         catch (Exception)
         {
@@ -469,7 +469,7 @@ public class DataLayer : IDAL
         string strSQL = @"SELECT title_id FROM Books WHERE title_id LIKE 'TD%' ORDER BY title_id DESC";
 
         OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
-       
+
 
         OleDbDataReader reader;
         string x = string.Empty;
@@ -507,8 +507,8 @@ public class DataLayer : IDAL
     {
         OpenConnection();
 
-        string strSQL = @"SELECT Authors.au_fname, Authors.au_lname FROM BookAuthor, Authors  WHERE BookAuthor.au_id=Authors.au_id AND title_id='@id'";
-       
+        string strSQL = @"SELECT Authors.au_lname, Authors.au_fname FROM (Authors INNER JOIN BookAuthor ON Authors.au_id = BookAuthor.au_id) WHERE (BookAuthor.title_id = @id)";
+
 
         OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
         myCmd.Parameters.AddWithValue("@id", id);
@@ -519,16 +519,17 @@ public class DataLayer : IDAL
         try
         {
             reader = myCmd.ExecuteReader();
-
-            while (reader.Read())
+            if (reader.HasRows)
             {
-                string x = string.Empty;
-                x = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
-                x += " ";
-                x += reader.IsDBNull(0) ? string.Empty : reader.GetString(1);
-                lista.Add(x);
+                while (reader.Read())
+                {
+                    string x = string.Empty;
+                    x = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                    x += " ";
+                    x += reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+                    lista.Add(x);
+                }
             }
-
 
         }
         catch (Exception)
@@ -543,7 +544,48 @@ public class DataLayer : IDAL
         return lista;
     }
 
-    public List<Book> ReadBook(List<Book> listaBooks)
+    public List<Author> ReadAuthors()
+    {
+        OpenConnection();
+
+        string strSQL = @"SELECT * FROM Authors";
+
+        OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+        OleDbDataReader reader;
+
+        List<Author> lista = new List<Author>();
+
+        try
+        {
+            reader = myCmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    Author x = new Author();
+                    x.Id = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                    x.LastName = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+                    x.FirstName = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
+                    x.Phone = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
+                    x.City = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
+                    lista.Add(x);
+                }
+            }
+
+        }
+        catch (Exception)
+        {
+            CloseConnection();
+        }
+        finally
+        {
+            CloseConnection();
+        }
+
+        return lista;
+    }
+
+    public List<Book> ReadBooks()
     {
         OpenConnection();
 
@@ -552,7 +594,7 @@ public class DataLayer : IDAL
         OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
 
         OleDbDataReader reader;
-
+        List<Book> listaBooks = new List<Book>();
 
         try
         {
@@ -586,7 +628,7 @@ public class DataLayer : IDAL
     {
         OpenConnection();
 
-        string strSQL = @"SELECT pub_name FROM Publishers WHERE pub_id='@id'";
+        string strSQL = @"SELECT pub_name FROM Publishers WHERE pub_id=@id";
 
         OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
         myCmd.Parameters.AddWithValue("@id", id);
@@ -598,7 +640,7 @@ public class DataLayer : IDAL
             reader = myCmd.ExecuteReader();
             while (reader.Read())
             {
-                
+
                 x = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
             }
             reader.Close();
@@ -613,6 +655,46 @@ public class DataLayer : IDAL
         }
 
         return x;
+    }
+
+    public List<Publisher> ReadPublishers()
+    {
+        OpenConnection();
+
+        string strSQL = @"SELECT * FROM Publishers";
+
+        OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+        OleDbDataReader reader;
+
+        List<Publisher> lista = new List<Publisher>();
+
+        try
+        {
+            reader = myCmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    Publisher x = new Publisher();
+                    x.Id = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                    x.Name = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+                    x.City = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
+                    x.Country = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
+                    lista.Add(x);
+                }
+            }
+
+        }
+        catch (Exception)
+        {
+            CloseConnection();
+        }
+        finally
+        {
+            CloseConnection();
+        }
+
+        return lista;
     }
     #endregion
     #region UPDATE
@@ -763,4 +845,5 @@ public class DataLayer : IDAL
     }
     #endregion
     #endregion
+
 }

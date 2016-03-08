@@ -11,7 +11,7 @@ public class Author
     private string _id;
     private string _lastName;
     private string _firstName;
-    private int _phone;
+    private string _phone;
     private string _city;
 
 
@@ -33,7 +33,7 @@ public class Author
         set { _firstName = value; }
     }
 
-    public int Phone
+    public string Phone
     {
         get { return _phone; }
         set { _phone = value; }
@@ -46,12 +46,21 @@ public class Author
     }
 
 
-    public Author(string a, string b, string c, int d, string e)
+    public Author(string a, string b, string c, string d, string e)
     {
         _id = a;
         _lastName = b;
         _firstName = c;
         _phone = d;
         _city = e;
+    }
+
+    public Author()
+    {
+        _id = "";
+        _lastName = "";
+        _firstName = "";
+        _phone = "";
+        _city = "";
     }
 }
