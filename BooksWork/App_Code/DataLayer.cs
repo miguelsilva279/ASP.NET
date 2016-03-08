@@ -23,7 +23,6 @@ public class DataLayer : IDAL
     {
         throw new NotImplementedException();
     }
-
     public bool ConnectionIsOpen()
     {
         throw new NotImplementedException();
