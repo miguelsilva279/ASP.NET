@@ -31,6 +31,7 @@ public interface IDAL
     User ExisteUserPass(string a, string b);
     bool jaExisteUser(string a);
     bool ExisteBook(Book e);
+    int readLastBookId();
     GridView ReadBook(GridView dataGrid, string idCriador);
     GridView ReadAuthor(GridView dataGrid, string idCon);
     GridView ReadPublisher(GridView dataGrid, string idCon);
@@ -40,7 +41,7 @@ public interface IDAL
     bool UpdateBook(Book u);
     bool UpdateAuthor(Author a);
     bool UpdatePublisher(Publisher p);
-    bool UpdateBookAuthor(string a, string b);
+    /*bool UpdateBookAuthor(string a, string b);*/
     #endregion
     #region DELETE
     bool DelUser(User u);
