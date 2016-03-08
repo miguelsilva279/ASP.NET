@@ -24,17 +24,17 @@ public class WebService : System.Web.Services.WebService
     [WebMethod]
     public string getBooks()
     {
-        
-
+        DataLayer x = new DataLayer(); 
+        Book b = new Book();
         string resultado = string.Empty;
+        List<Book> lista = x.ReadBook();
 
-
-        foreach ( xn in xnList)
+        foreach ( book in lista)
         {
-            if (xn.ChildNodes[0].InnerText == marca)
-            {
+            resultado += "<tr><td>b.id
+            
                 resultado += "<option>" + xn.ChildNodes[1].InnerText + "</option>";
-            }
+            
         }
         return resultado;
     }
