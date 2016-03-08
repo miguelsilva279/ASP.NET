@@ -32,9 +32,9 @@ public interface IDAL
     bool jaExisteUser(string a);
     bool ExisteBook(Book e);
     string readLastBookId();
-    GridView ReadBook(GridView dataGrid, string idCriador);
-    GridView ReadAuthor(GridView dataGrid, string idCon);
-    GridView ReadPublisher(GridView dataGrid, string idCon);
+    List<Book> ReadBook(List<Book> listaBooks);
+    List<string> ReadAuthor(string id);
+    string ReadPublisher( string id);
     #endregion
     #region UPDATE
     bool UpdateUser(User u);

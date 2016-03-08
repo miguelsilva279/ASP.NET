@@ -36,7 +36,7 @@ public class DataLayer : IDAL
         {
             if (conexao == null)
             {
-                string constr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:App_Data\\Books.mdb";
+                string constr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=|DataDirectory|\\Books.mdb";
                 conexao = new OleDbConnection(constr);
                 conexao.Open();
             }
@@ -469,6 +469,7 @@ public class DataLayer : IDAL
         string strSQL = @"SELECT title_id FROM Books WHERE title_id LIKE 'TD%' ORDER BY title_id DESC";
 
         OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+       
 
         OleDbDataReader reader;
         string x = string.Empty;
@@ -478,13 +479,14 @@ public class DataLayer : IDAL
             reader = myCmd.ExecuteReader();
             if (!reader.HasRows)
             {
-                x = "BC1000";
+                x = "TD1000";
             }
             else
             {
                 while (reader.Read())
                 {
                     x = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                    return x;
                 }
 
             }
@@ -501,19 +503,116 @@ public class DataLayer : IDAL
         return x;
     }
 
-    public GridView ReadAuthor(GridView dataGrid, string idCon)
+    public List<string> ReadAuthor(string id)
     {
-        throw new NotImplementedException();
+        OpenConnection();
+
+        string strSQL = @"SELECT Authors.au_fname, Authors.au_lname FROM BookAuthor, Authors  WHERE BookAuthor.au_id=Authors.au_id AND title_id='@id'";
+       
+
+        OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+        myCmd.Parameters.AddWithValue("@id", id);
+        OleDbDataReader reader;
+
+        List<string> lista = new List<string>();
+
+        try
+        {
+            reader = myCmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                string x = string.Empty;
+                x = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                x += " ";
+                x += reader.IsDBNull(0) ? string.Empty : reader.GetString(1);
+                lista.Add(x);
+            }
+
+
+        }
+        catch (Exception)
+        {
+            CloseConnection();
+        }
+        finally
+        {
+            CloseConnection();
+        }
+
+        return lista;
     }
 
-    public GridView ReadBook(GridView dataGrid, string idCriador)
+    public List<Book> ReadBook(List<Book> listaBooks)
     {
-        throw new NotImplementedException();
+        OpenConnection();
+
+        string strSQL = @"SELECT * FROM Books";
+
+        OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+
+        OleDbDataReader reader;
+
+
+        try
+        {
+            reader = myCmd.ExecuteReader();
+            while (reader.Read())
+            {
+                Book x = new Book();
+                x.id = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                x.Title = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+                x.Type = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
+                x.Price = reader.IsDBNull(4) ? 0 : reader.GetDecimal(4);
+                x.PubId = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
+                x.PubDate = reader.IsDBNull(5) ? string.Empty : reader.GetDateTime(5).ToString("MM/dd/yyyy");
+                listaBooks.Add(x);
+            }
+            reader.Close();
+        }
+        catch (Exception)
+        {
+            CloseConnection();
+        }
+        finally
+        {
+            CloseConnection();
+        }
+
+        return listaBooks;
     }
 
-    public GridView ReadPublisher(GridView dataGrid, string idCon)
+    public string ReadPublisher(string id)
     {
-        throw new NotImplementedException();
+        OpenConnection();
+
+        string strSQL = @"SELECT pub_name FROM Publishers WHERE pub_id='@id'";
+
+        OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+        myCmd.Parameters.AddWithValue("@id", id);
+        OleDbDataReader reader;
+
+        string x = string.Empty;
+        try
+        {
+            reader = myCmd.ExecuteReader();
+            while (reader.Read())
+            {
+                
+                x = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+            }
+            reader.Close();
+        }
+        catch (Exception)
+        {
+            CloseConnection();
+        }
+        finally
+        {
+            CloseConnection();
+        }
+
+        return x;
     }
     #endregion
     #region UPDATE

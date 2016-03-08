@@ -10,6 +10,7 @@
                 <td>ID</td>
                 <td>TITLE</td>
                 <td>TYPE</td>
+                <td>AUTHOR</td>
                 <td>PUB</td>
                 <td>PRICE</td>
                 <td>DATE</td>
@@ -21,12 +22,12 @@
         </tbody>
     </table>
     <label id="lblRes"></label>
-</asp:Content>
+    
 
-<script type="text/javascript">
+    <script type="text/javascript">
 CarregaBooks();
 
-function CarregaMarcas() {
+function CarregaBooks() {
             $.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
@@ -42,4 +43,6 @@ function CarregaMarcas() {
             });
         }
 
-<script>
+        </script>
+
+</asp:Content>

@@ -12,7 +12,7 @@ public class Book
     private string _title;
     private string _type;
     private string _pubId;
-    private double _price;
+    private decimal _price;
     private string _date;
 
 
@@ -40,7 +40,7 @@ public class Book
         set { _pubId = value; }
     }
 
-    public double Price
+    public decimal Price
     {
         get { return _price; }
         set { _price = value; }
@@ -52,13 +52,21 @@ public class Book
         set { _date = value; }
     }
 
-    public Book(string b, string c, double d)
+    public Book(string b, string c, decimal d)
     {
-        
-        _id = "TD"+ createId().ToString();
+
+        _id = "0";//"TD"+ createId().ToString();
         _title = b;
         _type = c;
         _price = d;
+        _date = DateTime.Now.ToString("MM/dd/yyyy");
+    }
+    public Book()
+    {
+        _id = "0";//"TD"+ createId().ToString();
+        _title = "";
+        _type = "";
+        _price = 0;
         _date = DateTime.Now.ToString("MM/dd/yyyy");
     }
 
@@ -69,6 +77,6 @@ public class Book
 
         string [] b = a.Split( new string [] {"TD"}, StringSplitOptions.None);
 
-        return int.Parse(b[0]);
+        return Convert.ToInt32(b[0]);
     }
 }
