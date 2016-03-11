@@ -17,7 +17,7 @@ public partial class Default2 : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-            if (!x.BDExiste())
+        if (!x.BDExiste())
             Label2.Text = "Nao tem ligaçao a base de dados";
     }
 

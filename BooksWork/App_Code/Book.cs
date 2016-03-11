@@ -55,7 +55,7 @@ public class Book
     public Book(string b, string c, decimal d)
     {
 
-        _id = "0";//"TD"+ createId().ToString();
+        _id = "TD"+ createId().ToString();
         _title = b;
         _type = c;
         _price = d;
@@ -63,7 +63,7 @@ public class Book
     }
     public Book()
     {
-        _id = "0";//"TD"+ createId().ToString();
+        _id = "TD"+ createId().ToString();
         _title = "";
         _type = "";
         _price = 0;
@@ -77,6 +77,6 @@ public class Book
 
         string [] b = a.Split( new string [] {"TD"}, StringSplitOptions.None);
 
-        return Convert.ToInt32(b[0]);
+        return (Convert.ToInt32(b[1]))+1;
     }
 }

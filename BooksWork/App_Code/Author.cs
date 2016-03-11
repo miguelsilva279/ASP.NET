@@ -46,9 +46,9 @@ public class Author
     }
 
 
-    public Author(string a, string b, string c, string d, string e)
+    public Author(string b, string c, string d, string e)
     {
-        _id = a;
+        _id = createId();
         _lastName = b;
         _firstName = c;
         _phone = d;
@@ -57,10 +57,30 @@ public class Author
 
     public Author()
     {
-        _id = "";
+        _id = createId();
         _lastName = "";
         _firstName = "";
         _phone = "";
         _city = "";
+    }
+
+    public string createId()
+    {
+        Random rnd = new Random();
+        DataLayer x= new DataLayer();
+
+        int a = rnd.Next(100, 999);
+        int b = rnd.Next(10, 99);
+        int c = rnd.Next(1000, 9999);
+        string d =a.ToString()+"-"+b.ToString()+"-"+c.ToString();
+        if (!x.compareIdAuthor(d))
+        {
+            return d;
+        }
+        else
+        {
+            createId();
+        }
+        return d;
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPageAdmin.master.cs" Inherits="MasterPageAdmin" %>
 
 <!DOCTYPE html>
 
@@ -40,6 +40,7 @@
                         </div>
                         </div>
                     </div>
+                
             </header>
             <!-- Drawer -->
             <div class="mdl-layout__drawer">
@@ -60,6 +61,9 @@
         <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
         
         </asp:ContentPlaceHolder>
+    <a href="Add.aspx"<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--primary" style="position:fixed; right: 30px; bottom:24px;">
+              <i class="material-icons">add</i>
+            </button></a>
             </div>
           </main>
         </div>

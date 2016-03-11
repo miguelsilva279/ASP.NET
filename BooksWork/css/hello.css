@@ -1,0 +1,15 @@
+﻿.addtabela {
+    width: 600px;
+    padding: 20px 20px 20px 20px;
+    margin-top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#tabelabotoes{
+    display: block;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    
+}

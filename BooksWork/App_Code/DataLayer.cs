@@ -20,7 +20,7 @@ public class DataLayer : IDAL
         bool flag = false;
         try
         {
-            if (File.Exists("App_Data\\Books.mdb"))
+            if (File.Exists("|DataDirectory|\\Books.mdb"))
                 flag = true;
         }
         catch (Exception)
@@ -240,14 +240,14 @@ public class DataLayer : IDAL
     }
     #endregion
     #region DELETE
-    public bool DelAuthor(Author a)
+    public bool DelAuthor(string a)
     {
         OpenConnection();
         bool flag = false;
         string strSQL = @"DELETE FROM Authors WHERE Id=@id";
 
         OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
-        myCmd.Parameters.AddWithValue("@id", a.Id);
+        myCmd.Parameters.AddWithValue("@id", a);
 
         try
         {
@@ -267,14 +267,14 @@ public class DataLayer : IDAL
 
     }
 
-    public bool DelBook(Book b)
+    public bool DelBook(string b)
     {
         OpenConnection();
         bool flag = false;
         string strSQL = @"DELETE FROM Books WHERE Id=@id";
 
         OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
-        myCmd.Parameters.AddWithValue("@id", b.id);
+        myCmd.Parameters.AddWithValue("@id", b);
 
         try
         {
@@ -299,14 +299,14 @@ public class DataLayer : IDAL
         throw new NotImplementedException();
     }
 
-    public bool DelPublisher(Publisher p)
+    public bool DelPublisher(string p)
     {
         OpenConnection();
         bool flag = false;
         string strSQL = @"DELETE FROM Publishers WHERE Id=@id";
 
         OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
-        myCmd.Parameters.AddWithValue("@id", p.Id);
+        myCmd.Parameters.AddWithValue("@id", p);
 
         try
         {
@@ -462,6 +462,75 @@ public class DataLayer : IDAL
 
         return flag;
     }
+
+    public bool compareIdAuthor(string id)
+    {
+        OpenConnection();
+
+        string strSQL = @"SELECT au_id FROM Author WHERE au_id = @id";
+
+        OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+        myCmd.Parameters.AddWithValue("@id", id);
+
+        OleDbDataReader reader;
+        bool flag = false;
+
+        try
+        {
+            reader = myCmd.ExecuteReader();
+            if (!reader.HasRows)
+            {
+               flag=true;
+            }
+            
+        }
+        catch (Exception)
+        {
+            CloseConnection();
+            flag = false;
+        }
+        finally
+        {
+            CloseConnection();
+        }
+
+        return flag;
+    }
+
+    public bool compareIdPublisher(string id)
+    {
+        OpenConnection();
+
+        string strSQL = @"SELECT pub_id FROM Author WHERE pub_id = @id";
+
+        OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+        myCmd.Parameters.AddWithValue("@id", id);
+
+        OleDbDataReader reader;
+        bool flag = false;
+
+        try
+        {
+            reader = myCmd.ExecuteReader();
+            if (!reader.HasRows)
+            {
+                flag = true;
+            }
+
+        }
+        catch (Exception)
+        {
+            CloseConnection();
+            flag = false;
+        }
+        finally
+        {
+            CloseConnection();
+        }
+
+        return flag;
+    }
+
     public string readLastBookId()
     {
         OpenConnection();
@@ -503,7 +572,7 @@ public class DataLayer : IDAL
         return x;
     }
 
-    public List<string> ReadAuthor(string id)
+    public List<string> ReadAuthorBook(string id)
     {
         OpenConnection();
 
@@ -585,6 +654,44 @@ public class DataLayer : IDAL
         return lista;
     }
 
+    public Book ReadBook(string id)
+    {
+        OpenConnection();
+
+        string strSQL = @"SELECT * FROM Books WHERE title_id=@id";
+
+        OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+        myCmd.Parameters.AddWithValue("@id", id);
+        OleDbDataReader reader;
+
+        Book x = new Book();
+        try
+        {
+            reader = myCmd.ExecuteReader();
+            while (reader.Read())
+            {
+               
+                x.id = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                x.Title = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+                x.Type = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
+                x.Price = reader.IsDBNull(4) ? 0 : reader.GetDecimal(4);
+                x.PubId = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
+                x.PubDate = reader.IsDBNull(5) ? string.Empty : reader.GetDateTime(5).ToString("MM/dd/yyyy");
+            }
+            reader.Close();
+        }
+        catch (Exception)
+        {
+            CloseConnection();
+        }
+        finally
+        {
+            CloseConnection();
+        }
+
+        return x;
+    }
+
     public List<Book> ReadBooks()
     {
         OpenConnection();
@@ -624,7 +731,7 @@ public class DataLayer : IDAL
         return listaBooks;
     }
 
-    public string ReadPublisher(string id)
+    public string ReadPublisherBook(string id)
     {
         OpenConnection();
 

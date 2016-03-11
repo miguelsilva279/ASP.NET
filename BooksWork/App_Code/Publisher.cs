@@ -36,10 +36,40 @@ public class Publisher
         set { _country = value; }
     }
 
+    public Publisher(string b, string c, string d)
+    {
+        _id= createId();
+        _name= b;
+        _city= c;
+        _country = d;
+    }
+
     public Publisher()
     {
-        //
-        // TODO: Add constructor logic here
-        //
+        _id = createId();
+        _name = "";
+        _city = "";
+        _country = "";
     }
+
+    public string createId()
+    {
+        Random rnd = new Random();
+        DataLayer x = new DataLayer();
+
+        int a = rnd.Next(1000, 9999);
+
+        string d = a.ToString();
+        if (!x.compareIdPublisher(d))
+        {
+            return d;
+        }
+        else
+        {
+            createId();
+        }
+        return d;
+
+    }
+
 }

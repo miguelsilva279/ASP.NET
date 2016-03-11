@@ -3,7 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <table>
+     <div id='tabelabotoes'> 
+    <table style='width:100%' class='mdl-data-table mdl-js-data-table mdl-shadow--2dp'>
         <thead>
             <tr>
                 <td>ID</td>
@@ -15,6 +16,7 @@
         <tbody id="tabela">
         </tbody>
     </table>
+         </div>
     <label id="lblRes"></label>
 
 

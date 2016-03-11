@@ -28,13 +28,16 @@ public interface IDAL
     #endregion
     #region Read
     bool ExisteUtilizador();
+    bool compareIdAuthor(string id);
+    bool compareIdPublisher(string id);
     User ExisteUserPass(string a, string b);
     bool jaExisteUser(string a);
     bool ExisteBook(Book e);
     string readLastBookId();
     List<Book> ReadBooks();
-    List<string> ReadAuthor(string id);
-    string ReadPublisher( string id);
+    Book ReadBook(string id);
+    List<string> ReadAuthorBook(string id);
+    string ReadPublisherBook( string id);
     List<Publisher> ReadPublishers();
     #endregion
     #region UPDATE
@@ -46,9 +49,9 @@ public interface IDAL
     #endregion
     #region DELETE
     bool DelUser(User u);
-    bool DelBook(Book b);
-    bool DelAuthor(Author a);
-    bool DelPublisher(Publisher p);
+    bool DelBook(string b);
+    bool DelAuthor(string a);
+    bool DelPublisher(string p);
     bool DelBookAuthor(string a, string b);
 
     #endregion
