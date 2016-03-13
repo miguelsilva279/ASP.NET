@@ -1,8 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPageAdmin.master" AutoEventWireup="true" CodeFile="BookAdmin.aspx.cs" Inherits="BookAdmin" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPageAdmin.master" AutoEventWireup="true" CodeFile="BookAdmin.aspx.cs" Inherits="BookAdmin" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+   
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div id='tabelabotoes'> 
@@ -64,19 +63,28 @@
         $("#formulario").hide();
         CarregaBooks();
 
-        $("#delete").unbind().click(function () {
+        $(".delete").unbind().click(function () {
 
             var id = $(this).parents('tr').find('td:eq(0)').html();
             deleteBook(id);
         });
-
-        $(".edit").unbind().onclick(function () {
-            alert("emtrei");
+        /*
+        $(".edit").unbind().click(function (e) {
+            console.log("emtrei");
             var id = $(this).parents('tr').find('td:eq(0)').html();
             editBook(id);
             alert(id);
         });
-
+        
+        $(".edit").on("click", "td:nth-child(0)", function (e) {
+            alert($(this).prev().html());
+            editBook($(this).prev().html());  //Get the previous sibling's HTML without inline JS
+        });
+        */
+        $("#tabela .edit").click(function () {
+            alert("entrei");
+            alert($(this).parentNode.children[0].innerText);
+        });
         function editBook(id) {
             $.ajax({
                 type: "POST",
@@ -88,11 +96,11 @@
                     $("#tabela").hide();
                     $("#formulario").show();
                     $("#txtId") = data.d(0);
-                    $("#txtTitle") = data.d[1];
-                    $("#txtType") = data.d[2];
-                    $("#txtpubId") = data.d[3];
-                    $("#txtPrice") = data.d[4];
-                    $("#txtPubDate") = data.d[5];
+                    $("#txtTitle") = data.d(1);
+                    $("#txtType") = data.d(2);
+                    $("#txtpubId") = data.d(3);
+                    $("#txtPrice") = data.d(4);
+                    $("#txtPubDate") = data.d(5);
                 },
                 error: function (data, status, error) {
                     $("#lblResultado");

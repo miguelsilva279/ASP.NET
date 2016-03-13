@@ -65,8 +65,7 @@ public class WebService : System.Web.Services.WebService
     public string getBooks2()
     {
         DataLayer x = new DataLayer();
-        string resultado = "<tr><td>ID</td><td>TITLE</td><td>TYPE</td><td>AUTHOR</td><td>PUB</td><td>PRICE</td><td>DATE</td><td>açao</td></tr>";
-
+        string resultado = string.Empty;
         List<Book> lista = new List<Book>();
         lista = x.ReadBooks();
 
@@ -96,7 +95,7 @@ public class WebService : System.Web.Services.WebService
             resultado += "<td>" + str + "</td>";
             resultado += "<td>" + element.Price.ToString() + "</td>";
             resultado += "<td>" + element.PubDate + "</td>";
-            resultado += "<td><button class='edit'>edit</button> <button class='delete'>delete</button></td>";
+            resultado += "<td><button class='editar'>edit</button> <button class='delete'>delete</button></td>";
             resultado += "</tr>";
 
         }
