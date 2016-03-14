@@ -803,6 +803,80 @@ public class DataLayer : IDAL
 
         return lista;
     }
+
+    public List<string> ReadUniqPublishers()
+    {
+        OpenConnection();
+
+        string strSQL = @"SELECT DISTINCT pub_name FROM Publishers";
+
+        OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+        OleDbDataReader reader;
+
+        List<string> lista = new List<string>();
+
+        try
+        {
+            reader = myCmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    string x = string.Empty;
+                    x = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                    lista.Add(x);
+                }
+            }
+
+        }
+        catch (Exception)
+        {
+            CloseConnection();
+        }
+        finally
+        {
+            CloseConnection();
+        }
+
+        return lista;
+    }
+
+    public List<string> ReadUniqType()
+    {
+        OpenConnection();
+
+        string strSQL = @"SELECT DISTINCT type FROM Books";
+
+        OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+        OleDbDataReader reader;
+
+        List<string> lista = new List<string>();
+
+        try
+        {
+            reader = myCmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    string x = string.Empty;
+                    x = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                    lista.Add(x);
+                }
+            }
+
+        }
+        catch (Exception)
+        {
+            CloseConnection();
+        }
+        finally
+        {
+            CloseConnection();
+        }
+
+        return lista;
+    }
     #endregion
     #region UPDATE
     public bool UpdateAuthor(Author a)

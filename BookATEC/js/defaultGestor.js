@@ -1,5 +1,12 @@
-$(document).ready(function() {
+$(document).ready(function () {
     CarregaBooks();
+});
+
+$(document).ready(function () {
+    $("#data").datepicker({
+        format: "dd-mm-yyyy",
+        language: "pt"
+    });
 });
 
 function CarregaBooks() {
@@ -20,7 +27,13 @@ function CarregaBooks() {
 
 $(".editar").unbind().click(function () {
     var id = $(this).parents('tr').find('td:eq(0)').html();
+    
     editBook(id);
+});
+
+$(".apagar").unbind().click(function () {
+    var id = $(this).parents('tr').find('td:eq(0)').html();
+    deleteBook(id);
 });
 
 function editBook(id) {
@@ -32,13 +45,9 @@ function editBook(id) {
         dataType: "json",
         success: function (data) {
             $("#tab").hide();
-            $("#formulario").show();
-            $("#id") = data.d[0];
-            $("#title") = data.d(1);
-            $("#type") = data.d(2);
-            $("#pub") = data.d(3);
-            $("#price") = data.d(4);
-            $("#date") = data.d(5);
+            $("#formulario").append(data.d);
+            $("#newType").hide();
+
         },
         error: function (data, status, error) {
             $("#lblResultado");
@@ -67,4 +76,13 @@ function deleteBook(id) {
             $("#lblResultado");
         }
     });
-};
+}
+
+    $(document).on('click', '#addType', function () {
+
+        $("#oldType").hide();
+        $("#newType").show();
+
+    });
+
+
