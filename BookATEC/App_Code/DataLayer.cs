@@ -155,8 +155,8 @@ public class DataLayer : IDAL
         string strSQL = @"INSERT INTO BookAuthor(au_id, title_id) values (?,?)";
 
         OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
-        myCmd.Parameters.AddWithValue("pub_id", a);
-        myCmd.Parameters.AddWithValue("pub_name", b);
+        myCmd.Parameters.AddWithValue("au_id", a);
+        myCmd.Parameters.AddWithValue("title_id", b);
 
         try
         {
@@ -271,7 +271,7 @@ public class DataLayer : IDAL
     {
         OpenConnection();
         bool flag = false;
-        string strSQL = @"DELETE FROM Books WHERE Id=@id";
+        string strSQL = @"DELETE FROM Books WHERE title_id=@id";
 
         OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
         myCmd.Parameters.AddWithValue("@id", b);
@@ -480,9 +480,9 @@ public class DataLayer : IDAL
             reader = myCmd.ExecuteReader();
             if (!reader.HasRows)
             {
-               flag=true;
+                flag = true;
             }
-            
+
         }
         catch (Exception)
         {
@@ -670,13 +670,13 @@ public class DataLayer : IDAL
             reader = myCmd.ExecuteReader();
             while (reader.Read())
             {
-               
+
                 x.id = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
                 x.Title = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
                 x.Type = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
                 x.Price = reader.IsDBNull(4) ? 0 : reader.GetDecimal(4);
                 x.PubId = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
-                x.PubDate = reader.IsDBNull(5) ? string.Empty : reader.GetDateTime(5).ToString("MM/dd/yyyy");
+                x.PubDate = Convert.ToDateTime(reader.GetDateTime(5));
             }
             reader.Close();
         }
@@ -714,7 +714,7 @@ public class DataLayer : IDAL
                 x.Type = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
                 x.Price = reader.IsDBNull(4) ? 0 : reader.GetDecimal(4);
                 x.PubId = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
-                x.PubDate = reader.IsDBNull(5) ? string.Empty : reader.GetDateTime(5).ToString("MM/dd/yyyy");
+                x.PubDate = reader.GetDateTime(5);
                 listaBooks.Add(x);
             }
             reader.Close();
@@ -886,7 +886,7 @@ public class DataLayer : IDAL
 
         OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
         OleDbDataReader reader;
-        
+
         List<string> lista = new List<string>();
 
         try
@@ -914,6 +914,80 @@ public class DataLayer : IDAL
         }
 
         return lista;
+    }
+
+    public string ReadIdAuthor(string name)
+    {
+        OpenConnection();
+
+        string strSQL = @"SELECT au_id FROM Authors WHERE au_fname=@fname AND au_lname=@lname";
+
+        OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+        OleDbDataReader reader;
+        String[] substrings = name.Split(' ');
+        myCmd.Parameters.AddWithValue("@fname", substrings[1]);
+        myCmd.Parameters.AddWithValue("@lname", substrings[2]);
+
+        string x = string.Empty;
+        try
+        {
+            reader = myCmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    x = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                }
+            }
+
+        }
+        catch (Exception)
+        {
+            CloseConnection();
+        }
+        finally
+        {
+            CloseConnection();
+        }
+
+        return x;
+    }
+
+    public string readPubID(string name)
+    {
+        OpenConnection();
+
+        string strSQL = @"SELECT pub_id FROM Publishers WHERE pub_name=@name";
+
+        OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+        OleDbDataReader reader;
+        
+        myCmd.Parameters.AddWithValue("@name", name);
+        
+
+        string x = string.Empty;
+        try
+        {
+            reader = myCmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    x = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                }
+            }
+
+        }
+        catch (Exception)
+        {
+            CloseConnection();
+        }
+        finally
+        {
+            CloseConnection();
+        }
+
+        return x;
     }
     #endregion
     #region UPDATE

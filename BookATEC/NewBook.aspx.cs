@@ -33,7 +33,12 @@ public partial class NewBook : System.Web.UI.Page
 
     protected void btnCancel_Click(object sender, EventArgs e)
     {
-        Server.Transfer("Default.aspx", true);
+        Response.ClearContent();
+        Response.Clear();
+        //Response.ContentType = "text/html";
+        //Response.Write("<h1>es um cagao</h1>");
+        Response.Redirect("Default.aspx", true);
+        Response.End();
     }
    
 }

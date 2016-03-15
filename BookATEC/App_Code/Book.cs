@@ -13,7 +13,7 @@ public class Book
     private string _type;
     private string _pubId;
     private decimal _price;
-    private string _date;
+    private DateTime _date;
 
 
     public string id
@@ -46,20 +46,21 @@ public class Book
         set { _price = value; }
     }
 
-    public string PubDate
+    public DateTime PubDate
     {
         get { return _date; }
         set { _date = value; }
     }
 
-    public Book(string b, string c, decimal d)
+    public Book(string b, string c, string f, decimal d, DateTime e)
     {
 
         _id = "TD"+ createId().ToString();
         _title = b;
         _type = c;
         _price = d;
-        _date = DateTime.Now.ToString("MM/dd/yyyy");
+        _date = e;
+        _pubId = f;
     }
     public Book()
     {
@@ -67,7 +68,8 @@ public class Book
         _title = "";
         _type = "";
         _price = 0;
-        _date = DateTime.Now.ToString("MM/dd/yyyy");
+        _pubId = "";
+        _date = DateTime.Now;
     }
 
     public int createId()

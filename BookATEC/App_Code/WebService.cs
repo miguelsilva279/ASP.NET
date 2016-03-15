@@ -195,16 +195,16 @@ public class WebService : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public string EditBook(string id)
+    public string getBook(string id)
     {
         DataLayer x = new DataLayer();
         string resultado = string.Empty;
 
         Book livro = x.ReadBook(id);
 
-        resultado += "<table><tr><td></td><td><input id='txtID'type='hidden'value='" + livro.id + "'/></td></tr>";
-        resultado += "<tr><td>Título:</td><td><input id='txtTitle'type='text' value='" + livro.Title + "'/></td></tr>";
-        resultado += "<tr id='oldType'><td>Categoria:</td><td><select id='typeBook'><option value='empty' selected></option>";
+        resultado += "<input class='send' id='txtID' type='hidden'value='" + livro.id + "'/>";
+        resultado += "Título:</td><td><input id='txtTitle'type='text' value='" + livro.Title + "'/></br>";
+        resultado += "<asp:Label ID='Label2'Text='Label>Categoria:</asp:Label></br><div id='oldCategoria'><select id='selType'><option value='empty' selected></option>";
         List<string> listaTipo = x.ReadUniqType();
         foreach(string str in listaTipo)
         {
@@ -214,22 +214,20 @@ public class WebService : System.Web.Services.WebService
                 resultado+="<option value='"+str+"'>"+str+"</option>";
         }
 
-        resultado += "</select><button type='button' id='addType'>Adicionar Categoria</button></td></tr><tr id='newType'><td>Categoria:</td><td><input id='txtType' type='text'/></td></tr>";
-        resultado += "<tr><td>Autor(es):</td>";
+        resultado += "</select><button type='button' id='btnCategoria'>Adicionar</button></div><div id='newCategoria'><input type='text' id='txtNewCategoria' /><button type='button' id='btnOkCategoria'>OK</button></br></div><div class='ui-widget'><label>Autor: </label></br>Pesquisar:<input id='tags'><button type='button' id='addAuthor'>Adicionar</button><button type='button' id='addAuthorNew'>Novo Registo</button></div><div id=newRegistoAutor><div>Primeiro Nome:</br><input id='fnameAuthor' type='text' /></br>Ultimo Nome:</br><input id='lnameAuthor' type='text' /></br>Telefone:</br><input id='telefoneAuthor' type='text' /></br>Cidade:</br><input id='cidadeAuthor' type='text' /></br><button id='btnOkAuthor' type='button'>Ok</button><button id='btnCancelAuthor' type='button'>Cancelar</button></div></div><div id='showAuthor'>";
         List<string> listaAutor = x.ReadAuthorBook(livro.id);
         for (int i = 0; i < listaAutor.Count; i++)
         {
-            if(i==0)
-            resultado+="<td><input  type='text' value='"+ listaAutor[i]+"' readonly/><button class='eliminarAutor' type='button'>Eliminar</button></td></tr>";
-            else
-            resultado += "<tr><td></td><td><input type='text' value='" + listaAutor[i] + "'readonly/><button class='eliminarAutor' type='button'>Eliminar</button></td></tr>";
+            
+            resultado+="<div><input  type='text' value='"+ listaAutor[i]+"' readonly/><button class='eliminarAutor' type='button'>Eliminar</button></div>";
+            
 
         }
-        resultado += "<tr><td></td><td><button type='button' id='btnAddAuthor'>Adicionar</button></td></tr>";
-        resultado += "<tr><td>Data publicação:</td><td><input type='text'id=data value='" + livro.PubDate + "'/></td></tr>";
-      
+        resultado += "</div><asp:Label ID='Label4' runat='server' Text='Label'>Editora:</asp:Label></br><div id='oldPub'><select id='selPub><option value='empty' selected></option>'";
+
+             
         string edi = x.ReadPublisherBook(livro.PubId);
-        resultado += "<tr><td>Editora:</td><td><select id='pubName'><option value='empty' selected></option>";
+
         List<string> listaEdi = x.ReadUniqPublishers();
         foreach(string str in listaEdi)
         {
@@ -238,8 +236,9 @@ public class WebService : System.Web.Services.WebService
             else
                 resultado+="<option value='"+str+"'>"+str+"</option>";
         }
-        resultado += "</select><button type='button' id='addEditora'>Adicionar Editora</button></td></tr></table>";
-        resultado += "<button id='btnGuardar' type='button'>Guardar</button><button id='btnCancelar' type='button'>Cancelar</button>";
+        resultado += "</select></div><div id='newPub'>Nome:<input type='text' id='txtNewPName'></input>City:<input type='text' id='txtNewPCity'></input>Country:<input type='text' id='txtNewPCountry'></input><button id='btnOkPublisher' type='button'>Ok</button><button id='btnCancelPublisher' type='button'>Cancelar</button></div><asp:Label ID='Label5' Text='Label'>Preço:</asp:Label></br>";
+        resultado += "<input class='send' type='text' value='" + livro.Price + "' ID='txtPreco'></input></br><asp:Label ID='Label6' runat='server' Text='Label'>Data:</asp:Label></br>";
+        resultado += "<input class='send' value='" + livro.PubDate + "' type='text' ID='txtDate'></input></br><label id='lblRes'></label></br><button ID='btnEditarBook' type='button'>Enviar</button><button ID='btnCancel'>Cancelar</button>";
 
 
 
@@ -304,5 +303,58 @@ public class WebService : System.Web.Services.WebService
 
        
         return flag;
+    }
+
+    [WebMethod]
+    public bool AddBook(List<string> arr1, List<string> arr2){
+        DataLayer x = new DataLayer();
+        bool flag =false;
+        DateTime dt = Convert.ToDateTime(arr1[4]);
+        List<string> lista=new List<string>();
+
+        string idPub = x.readPubID(arr1[2]);
+        Book b = new Book(arr1[0], arr1[1],idPub, Convert.ToDecimal(arr1[3]), dt);
+
+        flag = x.CreateBook(b);
+
+        foreach(string a in arr2){
+           string str = x.ReadIdAuthor(a);
+           lista.Add(str);
+        }
+
+        foreach(string id in lista){
+            flag=x.CreateBookAuthor(id, b.id);
+        }
+
+        return flag;
+
+    }
+
+    [WebMethod]
+    public bool editBook(List<string> arr1, List<string> arr2)
+    {
+        DataLayer x = new DataLayer();
+        bool flag = false;
+        DateTime dt = Convert.ToDateTime(arr1[4]);
+        List<string> lista = new List<string>();
+
+        string idPub = x.readPubID(arr1[3]);
+        Book b = new Book(arr1[1], arr1[2], idPub, Convert.ToDecimal(arr1[4]), dt);
+        b.id = arr1[0];
+        flag = x.UpdateBook(b);
+
+        foreach (string a in arr2)
+        {
+            string str = x.ReadIdAuthor(a);
+            lista.Add(str);
+        }
+
+        foreach (string id in lista)
+        {
+            flag = x.CreateBookAuthor(id, b.id);
+        }
+
+        return flag;
+
     }
 }

@@ -2,12 +2,6 @@ $(document).ready(function () {
     CarregaBooks();
 });
 
-$(document).ready(function () {
-    $("#data").datepicker({
-        format: "dd-mm-yyyy",
-        language: "pt"
-    });
-});
 
 function CarregaBooks() {
     $.ajax({
@@ -28,7 +22,7 @@ function CarregaBooks() {
 $(".editar").unbind().click(function () {
     var id = $(this).parents('tr').find('td:eq(0)').html();
     
-    editBook(id);
+    getBook(id);
 });
 
 $(".apagar").unbind().click(function () {
@@ -36,17 +30,19 @@ $(".apagar").unbind().click(function () {
     deleteBook(id);
 });
 
-function editBook(id) {
+function getBook(id) {
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: "WebService.asmx/EditBook",
+        url: "WebService.asmx/getBook",
         data: "{id: '" + id + "'}",
         dataType: "json",
         success: function (data) {
             $("#tab").hide();
             $("#formulario").append(data.d);
-            $("#newType").hide();
+            $("#newPub").hide();
+            $("#newCategoria").hide();
+            $("#newRegistoAutor").hide();
 
         },
         error: function (data, status, error) {
@@ -67,8 +63,8 @@ function deleteBook(id) {
                 alert("Erro ao eliminar livro!");
             }
             else {
-                alert("Livro elinminado com Sucesso!");
-                CarregaBooks();
+                alert("Livro eliminado com Sucesso!");
+                window.location.href = "Default.aspx";
             }
 
         },
@@ -78,11 +74,6 @@ function deleteBook(id) {
     });
 }
 
-    $(document).on('click', '#addType', function () {
-
-        $("#oldType").hide();
-        $("#newType").show();
-
-    });
+  
 
 

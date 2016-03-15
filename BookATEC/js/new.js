@@ -60,17 +60,41 @@ $(document).on('click', '#btnNewBook', function () {
         $("#txtPreco").val(),
         $("#txtDate").val()
         ];
-        alert($("#txtTitle").val());
-        alert($("#selType option:selected").text());
-        alert($("#selPub option:selected").text());
-        alert($("#txtPreco").val());
-        alert($("#txtDate").val());
+        
         $("#showAuthor > div").each(function (index, element) {
-            arr2.push($("input").val());
-            alert($("input").val());
+            
+            arr2.push($(".novoAutor").val());
+            alert($(".novoAutor").val());
         });
 
     }
+    addBook(arr1, arr2);
+
+});
+
+$(document).on('click', '#btnEditarBook', function () {
+    var arr1 = [];
+    var arr2 = [];
+    if (!verificaDropDown() || !verificaTextBox() || !verificaInsertAuthor()) {
+        $("#lblRes").html("Preencha todos os campos.");
+    } else {
+        arr1 = [
+        $("#txtID").val(),
+        $("#txtTitle").val(),
+        $("#selType option:selected").text(),
+        $("#selPub option:selected").text(),
+        $("#txtPreco").val(),
+        $("#txtDate").val()
+        ];
+
+        $("#showAuthor > div").each(function (index, element) {
+
+            arr2.push($(".novoAutor").val());
+            alert($(".novoAutor").val());
+        });
+
+    }
+    editBook(arr1, arr2);
 
 });
 
@@ -85,6 +109,9 @@ $(document).on('click', '#addAuthorNew', function () {
 
 $(document).on('click', '#btnPublisher', function () {
     $("#newPub").show();
+});
+$(document).on('click', '#btnCancel', function () {
+    window.location.href = "Default.aspx";
 });
 
 $(document).on('click', '#btnOkAuthor', function () {
@@ -137,12 +164,7 @@ $(document).ready(function () {
     $(function () {
         availableTags;
         $("#tags").autocomplete({
-            source: function (request, response) {
-                var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
-                response($.grep(availableTags, function (item) {
-                    return matcher.test(item);
-                }));
-            }
+            source: availableTags,
         });
     });
 });
@@ -167,6 +189,28 @@ function pesquisaAuthor() {
     });
 };
 
+function addBook(arr1, arr2) {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: "WebService.asmx/AddBook",
+        data: JSON.stringify({ arr1: arr1, arr2: arr2 }),
+        dataType: "json",
+        success: function (data) {
+            if (data.d) {
+                alert("Inserido com Sucesso")
+            }
+            else {
+                alert("Erro ao inserir");
+            }
+
+        },
+        error: function (data, status, error) {
+            $("#lblResultado");
+        }
+    });
+};
+
 function addAuthor(arr) {
     $.ajax({
         type: "POST",
@@ -177,7 +221,7 @@ function addAuthor(arr) {
         success: function (data) {
             if (data.d) {
                 alert("Inserido com sucesso");
-                $("#selPub").append("<input class='novoAutor' type='text' value='" + $("#fnameAuthor").val() + " " + $("#lnameAuthor").val() + "' readonly/><button class='eliminarAutor' type='button'>Eliminar</button></br>");
+                $("#showAuthor").append("<div><input class='novoAutor' type='text' value='" + $("#fnameAuthor").val() + " " + $("#lnameAuthor").val() + "' readonly/><button class='eliminarAutor' type='button'>Eliminar</button></div>");
                 $("#fnameAuthor").val("");
                 $("#lnameAuthor").val("");
                 $("#telefoneAuthor").val("");
@@ -221,3 +265,25 @@ function addPublisher(arr) {
         }
     });
 };
+
+function editBook(arr1, arr2) {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: "WebService.asmx/editBook",
+        data: JSON.stringify({ arr1: arr1, arr2: arr2 }),
+        dataType: "json",
+        success: function (data) {
+            if (data.d) {
+                alert("Inserido com Sucesso")
+            }
+            else {
+                alert("Erro ao inserir");
+            }
+
+        },
+        error: function (data, status, error) {
+            $("#lblResultado");
+        }
+    });
+}

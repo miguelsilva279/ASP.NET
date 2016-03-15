@@ -42,6 +42,8 @@ public interface IDAL
     List<string> ReadUniqPublishers();
     List<string> ReadUniqType();
     List<string> ReadNameAuthor();
+    string ReadIdAuthor(string name);
+    string readPubID(string name);
     #endregion
     #region UPDATE
     bool UpdateUser(User u);
