@@ -49,8 +49,8 @@ public class Author
     public Author(string b, string c, string d, string e)
     {
         _id = createId();
-        _lastName = b;
-        _firstName = c;
+        _lastName = c;
+        _firstName = b;
         _phone = d;
         _city = e;
     }

@@ -256,5 +256,53 @@ public class WebService : System.Web.Services.WebService
 
         return flag;
     }
+
+    [WebMethod]
+    public string PesquisaAuthor()
+    {
+        DataLayer x = new DataLayer();
+        string resultado = string.Empty;
+        List<string> listaAutor = x.ReadNameAuthor();
+
+        int i = 1;
+        
+        foreach (string item in listaAutor)
+        {
+
+            if (i == listaAutor.Count)
+                resultado += item;
+            else
+                resultado += item + ", ";
+            i++;
+
+        }
+        return resultado;
+    }
+
+    [WebMethod]
+    public bool AddAuthor(List<string> arr)
+    {
+        DataLayer x = new DataLayer();
+
+        Author au = new Author(arr[0], arr[1], arr[2], arr[3]);
+
+        bool flag = x.CreateAuthor(au);
+
+       
+        return flag;
+    }
     
+    
+    [WebMethod]
+    public bool AddPublisher(List<string> arr)
+    {
+        DataLayer x = new DataLayer();
+
+        Publisher p = new Publisher(arr[0], arr[1], arr[2]);
+
+        bool flag = x.CreatePublisher(p);
+
+       
+        return flag;
+    }
 }
