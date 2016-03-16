@@ -1,0 +1,26 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPageVisitor.master.cs" Inherits="MasterPageVisitor" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+    <script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
+    <asp:ContentPlaceHolder id="ContentPlaceHolder2" runat="server">
+        
+     </asp:ContentPlaceHolder>
+     <!--<script type="text/javascript" src="js/defaultGestor.js"></script>-->
+</body>
+</html>
