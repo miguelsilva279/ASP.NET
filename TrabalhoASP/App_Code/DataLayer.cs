@@ -30,8 +30,9 @@ public class DataLayer : IDAL
         return flag;
     }
 
-    public void OpenConnection()
+    public bool OpenConnection()
     {
+        bool flag = false;
         try
         {
             if (conexao == null)
@@ -39,10 +40,18 @@ public class DataLayer : IDAL
                 string constr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=|DataDirectory|\\Books.mdb";
                 conexao = new OleDbConnection(constr);
                 conexao.Open();
+
+                flag = true;
+                return flag;
             }
             else
                 if (conexao.State != ConnectionState.Open)
-                    conexao.Open();
+            {
+                conexao.Open();
+                flag = true;
+                return flag;
+            }
+                    
         }
         catch (Exception)
         {
@@ -271,9 +280,10 @@ public class DataLayer : IDAL
     {
         OpenConnection();
         bool flag = false;
+        DelBookAuthor(b);
         string strSQL = @"DELETE FROM Books WHERE title_id=@id";
-
         OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+        OleDbTransaction trans = conexao.BeginTransaction();
         myCmd.Parameters.AddWithValue("@id", b);
 
         try
@@ -294,9 +304,44 @@ public class DataLayer : IDAL
 
     }
 
-    public bool DelBookAuthor(string a, string b)
+    public bool DelBookAuthor( string b)
     {
-        throw new NotImplementedException();
+        OpenConnection();
+        bool flag = false;
+        string strSQL = @"DELETE FROM Books WHERE title_id=@id";
+        string strSQL2 = @"DELETE FROM BookAuthors WHERE title_id=@id";
+        OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
+        OleDbCommand myCmd2 = new OleDbCommand(strSQL2, conexao);
+
+        myCmd.Parameters.AddWithValue("@id", b);
+        myCmd2.Parameters.AddWithValue("@id", b);
+
+        OleDbTransaction trans = conexao.BeginTransaction();
+        myCmd.Transaction = trans;
+        myCmd2.Transaction = trans;
+
+        try
+        {
+            myCmd2.ExecuteNonQuery();
+            myCmd.ExecuteNonQuery();
+            flag = true;
+
+            trans.Commit();
+        }
+        catch (Exception)
+        {
+            if (trans != null)
+                trans.Rollback();
+            if (conexao != null && OpenConnection())
+                CloseConnection();
+            flag = false;
+        }
+        finally
+        {
+            CloseConnection();
+        }
+        return flag;
+
     }
 
     public bool DelPublisher(string p)
