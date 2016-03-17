@@ -38,10 +38,9 @@
           <div class="mdl-layout__drawer">
             <span class="mdl-layout-title">Menu</span>
             <nav class="mdl-navigation">
-              <a class="mdl-navigation__link" href="Default.aspx">Início</a>
-              <a class="mdl-navigation__link" href="">Autor</a>
-              <a class="mdl-navigation__link" href="">Livros</a>
-              <a class="mdl-navigation__link" href="">Editoras</a>
+              <a class="mdl-navigation__link" href="Default2.aspx">Autores</a>
+              <a class="mdl-navigation__link" href="Default.aspx">Livros</a>
+              <a class="mdl-navigation__link" href="Default3.aspx">Editoras</a>
                 <hr />
               <a class="mdl-navigation__link" href="">Login</a>
             </nav>

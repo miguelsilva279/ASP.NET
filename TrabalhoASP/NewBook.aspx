@@ -28,7 +28,7 @@
     <div class="ui-widget">
         <label>Autor: </label>
         </br>
-        Pesquisar:<input id="tags">
+        Pesquisar:<input type="search" id="tags">
         <button type="button" id="addAuthor">Adicionar</button>
         <button type="button" id="addAuthorNew">Novo Registo</button>
     </div>
