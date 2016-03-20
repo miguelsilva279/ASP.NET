@@ -93,8 +93,8 @@ public class WebService : System.Web.Services.WebService
             resultado += "</td>";
             string str = x.ReadPublisherBook(element.PubId);
             resultado += "<td>" + str + "</td>";
-            resultado += "<td>" + element.Price.ToString() + "</td>";
-            resultado += "<td>" + element.PubDate + "</td>";
+            resultado += "<td>" + element.Price.ToString() +" "+ "&#x80" + "</td>";
+            resultado += "<td>" + element.PubDate.ToString("dd'-'MM'-'yyyy") +"</td>";
             resultado += "<td><a href='#' class='editar'><i class='material-icons' style='color:black;'>edit</i></a> <a href='#' class='apagar'><i class='material-icons' style='color:black;'>delete</i></a></td>";
             resultado += "</tr>";
 

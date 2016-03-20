@@ -281,20 +281,32 @@ public class DataLayer : IDAL
     {
         OpenConnection();
         bool flag = false;
-        DelBookAuthor(b);
         string strSQL = @"DELETE FROM Books WHERE title_id=@id";
+        string strSQL2 = @"DELETE FROM BookAuthor WHERE title_id=@id";
         OleDbCommand myCmd = new OleDbCommand(strSQL, conexao);
-        OleDbTransaction trans = conexao.BeginTransaction();
+        OleDbCommand myCmd2 = new OleDbCommand(strSQL2, conexao);
+
         myCmd.Parameters.AddWithValue("@id", b);
+        myCmd2.Parameters.AddWithValue("@id", b);
+
+        OleDbTransaction trans = conexao.BeginTransaction();
+        myCmd.Transaction = trans;
+        myCmd2.Transaction = trans;
 
         try
         {
+            myCmd2.ExecuteNonQuery();
             myCmd.ExecuteNonQuery();
             flag = true;
+
+            trans.Commit();
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            CloseConnection();
+            if (trans != null)
+                trans.Rollback();
+            if (conexao != null && OpenConnection())
+                CloseConnection();
             flag = false;
         }
         finally
@@ -302,6 +314,7 @@ public class DataLayer : IDAL
             CloseConnection();
         }
         return flag;
+
 
     }
 
