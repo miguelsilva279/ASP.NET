@@ -60,11 +60,11 @@ $(document).on('click', '#btnNewBook', function () {
         $("#txtPreco").val(),
         $("#txtDate").val()
         ];
-        
-        $("#showAuthor > div").each(function (index, element) {
-            
-            arr2.push($(".novoAutor").val());
-            alert($(".novoAutor").val());
+
+
+        $("#showAuthor").children().each(function () {
+
+            arr2.push($(this).children('input').val());
         });
 
     }
