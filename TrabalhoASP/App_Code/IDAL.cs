@@ -11,7 +11,7 @@ public interface IDAL
 {
     bool BDExiste();
     bool ConnectionIsOpen();
-    void OpenConnection();
+    bool OpenConnection();
     void CloseConnection();
 
 
@@ -57,7 +57,6 @@ public interface IDAL
     bool DelBook(string b);
     bool DelAuthor(string a);
     bool DelPublisher(string p);
-    bool DelBookAuthor(string a, string b);
 
     #endregion
     #endregion

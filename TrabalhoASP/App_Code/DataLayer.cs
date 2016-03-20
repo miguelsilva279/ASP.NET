@@ -57,6 +57,7 @@ public class DataLayer : IDAL
         {
             throw new NotImplementedException("Erro ao abrir conexão á base de dados.");
         }
+        return flag;
     }
 
     public void CloseConnection()
