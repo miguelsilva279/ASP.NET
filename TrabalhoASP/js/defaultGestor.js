@@ -18,17 +18,39 @@ function CarregaBooks() {
     });
 };
 
-$(".editar").unbind().click(function () {
+$(".editarBook").unbind().click(function () {
     var id = $(this).parents('tr').find('td:eq(0)').html();
     
     getBook(id);
 });
+/* Para modificar ***NUNO
+$(".editarAuthor").unbind().click(function () {
+    var id = $(this).parents('tr').find('td:eq(0)').html();
 
-$(".apagar").unbind().click(function () {
+    getBook(id);
+});
+
+$(".editarPublisher").unbind().click(function () {
+    var id = $(this).parents('tr').find('td:eq(0)').html();
+
+    getBook(id);
+});*/
+
+$(".apagarBook").unbind().click(function () {
+    var id = $(this).parents('tr').find('td:eq(0)').html();
+    deleteBook(id);
+});
+/* ***NUNO
+$(".apagarAuthor").unbind().click(function () {
     var id = $(this).parents('tr').find('td:eq(0)').html();
     deleteBook(id);
 });
 
+$(".apagarPublisher").unbind().click(function () {
+    var id = $(this).parents('tr').find('td:eq(0)').html();
+    deleteBook(id);
+});
+*/
 function getBook(id) {
     $.ajax({
         type: "POST",

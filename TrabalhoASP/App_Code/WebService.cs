@@ -75,11 +75,11 @@ public class WebService : System.Web.Services.WebService
 
             resultado += "<tr>";
             resultado += "<td id='tabHide'>" + element.id + "</td>";
-            resultado += "<td>" + element.Title + "</td>";
-            resultado += "<td>" + element.Type + "</td>";
+            resultado += "<td class='mdl-data-table__cell--non-numeric'>" + element.Title + "</td>";
+            resultado += "<td class='mdl-data-table__cell--non-numeric'>" + element.Type + "</td>";
             List<string> listaAutor = x.ReadAuthorBook(element.id);
             int i = 1;
-            resultado += "<td>";
+            resultado += "<td class='mdl-data-table__cell--non-numeric'>";
             foreach (string item in listaAutor)
             {
 
@@ -92,10 +92,10 @@ public class WebService : System.Web.Services.WebService
             }
             resultado += "</td>";
             string str = x.ReadPublisherBook(element.PubId);
-            resultado += "<td>" + str + "</td>";
+            resultado += "<td class='mdl-data-table__cell--non-numeric'>" + str + "</td>";
             resultado += "<td>" + element.Price.ToString() +" "+ "&#x80" + "</td>";
             resultado += "<td>" + element.PubDate.ToString("dd'-'MM'-'yyyy") +"</td>";
-            resultado += "<td><a href='#' class='editar'><i class='material-icons' style='color:black;'>edit</i></a> <a href='#' class='apagar'><i class='material-icons' style='color:black;'>delete</i></a></td>";
+            resultado += "<td><a href='#' class='editarBook'><i class='material-icons' style='color:black;'>edit</i></a> <a href='#' class='apagarBook'><i class='material-icons' style='color:black;'>delete</i></a></td>";
             resultado += "</tr>";
 
         }
@@ -138,10 +138,10 @@ public class WebService : System.Web.Services.WebService
         foreach (Author element in lista)
         {
             resultado += "<td id='tabHide'>" + element.Id + "</td>";
-            resultado += "<td>" + element.FirstName + " " + element.LastName + "</td>";
+            resultado += "<td class='mdl-data-table__cell--non-numeric'>" + element.FirstName + " " + element.LastName + "</td>";
             resultado += "<td>" + element.Phone + "</td>";
-            resultado += "<td>" + element.City + "</td>";
-            resultado += "<td><button id='edit' class='mdl-button mdl-js-button mdl-button--icon edit'><i class='material-icons' style='color:black;'>edit</i></button> <button id='delete' class='mdl-button mdl-js-button mdl-button--icon'><i class='material-icons' style='color:black;'>delete</i></button></td>";
+            resultado += "<td class='mdl-data-table__cell--non-numeric'>" + element.City + "</td>";
+            resultado += "<td><button class='mdl-button mdl-js-button mdl-button--icon editarAuthor'><i class='material-icons' style='color:black;'>edit</i></button> <button class='mdl-button mdl-js-button mdl-button--icon apagarAuthor'><i class='material-icons' style='color:black;'>delete</i></button></td>";
             resultado += "</tr>";
 
         }
@@ -185,9 +185,10 @@ public class WebService : System.Web.Services.WebService
         {
             resultado += "<tr>";
             resultado += "<td id='tabHide'>" + element.Id + "</td>";
-            resultado += "<td>" + element.Name + "</td>";
-            resultado += "<td>" + element.City + "</td>";
-            resultado += "<td>" + element.Country + "</td>";
+            resultado += "<td class='mdl-data-table__cell--non-numeric'>" + element.Name + "</td>";
+            resultado += "<td class='mdl-data-table__cell--non-numeric'>" + element.City + "</td>";
+            resultado += "<td class='mdl-data-table__cell--non-numeric'>" + element.Country + "</td>";
+            resultado += "<td><button class='mdl-button mdl-js-button mdl-button--icon editarPublisher'><i class='material-icons' style='color:black;'>edit</i></button> <button class='mdl-button mdl-js-button mdl-button--icon apagarPublisher'><i class='material-icons' style='color:black;'>delete</i></button></td>";
             resultado += "</tr>";
 
         }

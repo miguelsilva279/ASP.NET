@@ -9,7 +9,7 @@
         <table id="tblSearch" style="width:80%; margin-left:auto; margin-right:auto; margin-top:10px;" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
           <thead>
             <tr>
-              <th class="tabHide"></th>
+              <th class="tabHide">ID</th>
               <th class='mdl-data-table__cell--non-numeric'>Título</th>
               <th class='mdl-data-table__cell--non-numeric'>Categoria</th>
               <th class='mdl-data-table__cell--non-numeric'>Autor</th>

@@ -11,7 +11,7 @@ public partial class Default2 : System.Web.UI.Page
     {
         
         WebService x = new WebService();
-        tabelaResultado.InnerHtml = x.getBooks2();
+        tabelaResultadoAuthor.InnerHtml = x.getAuthors2();
         
     }
 }

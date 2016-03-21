@@ -9,17 +9,14 @@
         <table id="tblSearch" style="width:80%; margin-left:auto; margin-right:auto; margin-top:10px;" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
           <thead>
             <tr>
-              <th class="tabHide"></th>
-              <th class='mdl-data-table__cell--non-numeric'>Título</th>
-              <th class='mdl-data-table__cell--non-numeric'>Categoria</th>
-              <th class='mdl-data-table__cell--non-numeric'>Autor</th>
-              <th class='mdl-data-table__cell--non-numeric'>Editora</th>
-              <th>Preço</th>
-              <th>Data</th>
+              <th class="tabHide">ID</th>
+              <th class='mdl-data-table__cell--non-numeric'>Nome</th>
+              <th class='mdl-data-table__cell--non-numeric'>Telefone</th>
+              <th class='mdl-data-table__cell--non-numeric'>Cidade</th>
               <th></th>
             </tr>
           </thead>
-          <tbody id="tabelaResultado" runat="server">
+          <tbody id="tabelaResultadoAuthor" runat="server">
           </tbody>
         </table>
         <a href="NewBook.aspx"<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--primary" style="position:fixed; right: 30px; bottom:24px;">
